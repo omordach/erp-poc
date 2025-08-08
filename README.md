@@ -51,8 +51,8 @@ FLUSH PRIVILEGES;
 
 **Clone & run**
 ```bash
-git clone <this-repo> unionimpact-erp-poc
-cd unionimpact-erp-poc
+git clone <this-repo> erp-poc
+cd erp-poc
 chmod +x bootstrap.sh
 ./bootstrap.sh
 ```
