@@ -51,15 +51,38 @@ php artisan tenants:migrate:poc --force
 echo "==> Tenants seed (users, demo data, demo tokens)"
 php artisan tenants:seed:poc --force
 
-echo "==> Starting Laravel (http://127.0.0.1:8000) in background"
-php artisan serve --host=127.0.0.1 --port=8000 > storage/logs/dev-server.log 2>&1 &
-LARAVEL_PID=$!
-echo "Laravel PID: $LARAVEL_PID"
+start_laravel() {
+  echo "==> Starting Laravel (http://127.0.0.1:8000) in background"
+  local log_file="$BACK/storage/logs/dev-server.log"
+  : > "$log_file"
+  php artisan serve --host=127.0.0.1 --port=8000 > "$log_file" 2>&1 &
+  LARAVEL_PID=$!
+  echo "Laravel PID: $LARAVEL_PID"
+
+  local retries=30
+  while (( retries > 0 )); do
+    if grep -q "Server running" "$log_file"; then
+      return 0
+    fi
+    if ! kill -0 "$LARAVEL_PID" 2>/dev/null; then
+      break
+    fi
+    sleep 1
+    ((retries--))
+  done
+
+  echo "Laravel failed to start. Log output:"
+  cat "$log_file"
+  kill "$LARAVEL_PID" 2>/dev/null || true
+  exit 1
+}
 
 cleanup() {
   echo "==> Stopping Laravel (PID $LARAVEL_PID)"
   kill $LARAVEL_PID 2>/dev/null || true
 }
+
+start_laravel
 trap cleanup EXIT
 
 echo "==> Frontend: npm install & dev (http://127.0.0.1:5173)"
