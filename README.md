@@ -1,4 +1,4 @@
-# UnionImpact ERP PoC (Hybrid SaaS — Laravel 12 + Vue 3)
+# ERP PoC (Hybrid SaaS — Laravel 12 + Vue 3)
 
 Modular-monolith ERP for US Labor Unions. Hybrid SaaS (multi-tenant + dedicated single-tenant).  
 **Tenancy:** Spatie Laravel Multitenancy v4. **Auth:** Sanctum personal access tokens.  
