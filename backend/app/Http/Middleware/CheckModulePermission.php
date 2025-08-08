@@ -11,16 +11,16 @@ class CheckModulePermission
     public function handle(Request $request, Closure $next, string $moduleKey, string $requiredRole = 'viewer')
     {
         $user = $request->user();
-        if (!$user) {
+        if (! $user) {
             return response()->json([
-                'error' => ['status' => 401, 'code' => 'UNAUTHENTICATED', 'message' => 'Unauthenticated.']
+                'error' => ['status' => 401, 'code' => 'UNAUTHENTICATED', 'message' => 'Unauthenticated.'],
             ], 401);
         }
 
         $tenant = Tenant::current();
-        if (!$tenant) {
+        if (! $tenant) {
             return response()->json([
-                'error' => ['status' => 400, 'code' => 'NO_TENANT', 'message' => 'Tenant not resolved.']
+                'error' => ['status' => 400, 'code' => 'NO_TENANT', 'message' => 'Tenant not resolved.'],
             ], 400);
         }
 
@@ -31,7 +31,7 @@ class CheckModulePermission
         }
 
         return response()->json([
-            'error' => ['status' => 403, 'code' => 'FORBIDDEN', 'message' => 'Insufficient permissions.']
+            'error' => ['status' => 403, 'code' => 'FORBIDDEN', 'message' => 'Insufficient permissions.'],
         ], 403);
     }
 }
