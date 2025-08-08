@@ -37,7 +37,7 @@ Modular-monolith ERP. Hybrid SaaS (multi-tenant + dedicated single-tenant).
 **Required versions**
 - PHP 8.3 (`php -v`)
 - Composer 2.x
-- MariaDB 10.6+ (`mysql --version`)
+- MariaDB 10.6+ and CLI tools (`mysql --version`; install `mariadb-client` if `mysql` is missing)
 - Node.js 22.x (`node -v`)
 - npm 10+
 
