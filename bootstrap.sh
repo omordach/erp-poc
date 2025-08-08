@@ -12,6 +12,23 @@ command -v node >/dev/null || { echo "Node.js not found"; exit 1; }
 command -v npm >/dev/null || { echo "npm not found"; exit 1; }
 command -v mysql >/dev/null || { echo "mysql client not found"; exit 1; }
 
+PHP_VERSION_STRING=$(php -v | head -n 1 | awk '{print $2}')
+PHP_MAJOR=${PHP_VERSION_STRING%%.*}
+PHP_MINOR=${PHP_VERSION_STRING#*.}
+PHP_MINOR=${PHP_MINOR%%.*}
+if [ "$PHP_MAJOR" -lt 8 ] || { [ "$PHP_MAJOR" -eq 8 ] && [ "$PHP_MINOR" -lt 3 ]; }; then
+  echo "PHP 8.3 or higher required, found $PHP_VERSION_STRING"
+  exit 1
+fi
+
+NODE_VERSION=$(node -v)
+NODE_VERSION=${NODE_VERSION#v}
+NODE_MAJOR=${NODE_VERSION%%.*}
+if [ "$NODE_MAJOR" -lt 22 ]; then
+  echo "Node.js 22 or higher required, found $(node -v)"
+  exit 1
+fi
+
 echo "==> Backend: composer install"
 cd "$BACK"
 composer install --no-interaction --prefer-dist
