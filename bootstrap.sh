@@ -46,7 +46,11 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "==> Frontend: npm install & dev (http://127.0.0.1:5173)"
+echo "==> Frontend: npm ci & dev (http://127.0.0.1:5173)"
 cd "$FRONT"
-npm install
+if [ -d node_modules ]; then
+  echo "node_modules already exists, skipping npm ci"
+else
+  npm ci
+fi
 npm run dev
