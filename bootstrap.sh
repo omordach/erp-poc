@@ -23,6 +23,22 @@ fi
 
 php artisan key:generate --force
 
+# Load database credentials
+ENV_FILE="$BACK/.env"
+if [ ! -f "$ENV_FILE" ]; then
+  ENV_FILE="$BACK/.env.example"
+fi
+set -a
+# shellcheck disable=SC1090
+source "$ENV_FILE"
+set +a
+
+MYSQL_OPTS=(--host="$LANDLORD_DB_HOST" --port="$LANDLORD_DB_PORT" --user="$LANDLORD_DB_USERNAME" --password="$LANDLORD_DB_PASSWORD")
+if ! mysql "${MYSQL_OPTS[@]}" -e "USE \`$LANDLORD_DB_DATABASE\`" >/dev/null 2>&1; then
+  echo "==> Creating landlord database"
+  mysql "${MYSQL_OPTS[@]}" -e "CREATE DATABASE IF NOT EXISTS \`$LANDLORD_DB_DATABASE\`"
+fi
+
 echo "==> Landlord migrate"
 php artisan migrate --database=landlord --path=database/migrations_landlord --force
 
