@@ -1,6 +1,6 @@
 # ERP PoC (Hybrid SaaS — Laravel 12 + Vue 3)
 
-Modular-monolith ERP for US Labor Unions. Hybrid SaaS (multi-tenant + dedicated single-tenant).  
+Modular-monolith ERP. Hybrid SaaS (multi-tenant + dedicated single-tenant).  
 **Tenancy:** Spatie Laravel Multitenancy v4. **Auth:** Sanctum personal access tokens.  
 **API:** Versioned JSON REST under `/api/v1` (SPA consumes strictly via API).
 
