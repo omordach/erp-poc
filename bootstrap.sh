@@ -63,10 +63,10 @@ echo "==> Landlord seed (creates tenants + their DBs)"
 php artisan db:seed --class="Database\\Seeders\\LandlordDatabaseSeeder" --force
 
 echo "==> Tenants migrate (all tenants)"
-php artisan tenants:migrate:poc --force
+php artisan tenants:migrate:poc
 
 echo "==> Tenants seed (users, demo data, demo tokens)"
-php artisan tenants:seed:poc --force
+php artisan tenants:seed:poc
 
 start_laravel() {
   echo "==> Starting Laravel (http://127.0.0.1:8000) in background"
