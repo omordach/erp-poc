@@ -23,6 +23,10 @@ return [
 
     'tenant_database_connection_name' => env('TENANT_DB_CONNECTION', 'tenant'),
 
+    'current_tenant_container_key' => 'currentTenant',
+
+    'current_tenant_context_key' => 'tenantId',
+
     'initialize_tenancy_middleware' => [
         // We explicitly resolve via TenantFinder; plus custom header fallback middleware in Kernel.
     ],
