@@ -7,6 +7,7 @@ return Application::configure(basePath: dirname(__DIR__))
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        Laravel\Sanctum\SanctumServiceProvider::class,
         Spatie\Multitenancy\MultitenancyServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
         App\Providers\ModulesServiceProvider::class,
