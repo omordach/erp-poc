@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Middleware\CheckModulePermission;
+use App\Http\Middleware\TenantFromHeader;
+use App\Http\Middleware\TenantTokenScope;
+use Fruitcake\Cors\HandleCors;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
@@ -18,8 +24,17 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up'
     )
-    ->withMiddleware(function ($middleware) {
-        //
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->append([HandlePrecognitiveRequests::class, HandleCors::class]);
+
+        $middleware->api(prepend: [
+            TenantFromHeader::class,
+            TenantTokenScope::class,
+        ]);
+
+        $middleware->alias([
+            'module.permission' => CheckModulePermission::class,
+        ]);
     })
     ->withExceptions(function ($exceptions) {
         //
