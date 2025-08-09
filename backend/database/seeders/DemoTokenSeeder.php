@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Laravel\Sanctum\PersonalAccessToken;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Spatie\Multitenancy\Models\Tenant;
 
 class DemoTokenSeeder extends Seeder
@@ -16,31 +14,28 @@ class DemoTokenSeeder extends Seeder
         $tenant = Tenant::current();
         if (! $tenant) {
             $this->command?->warn('No current tenant; run this inside tenant context.');
+
             return;
         }
 
         // Admin token
-        $admin = User::where('email','admin@example.test')->first();
+        $admin = User::on('tenant')->where('email', 'admin@example.test')->first();
         if ($admin) {
-            $token = $admin->createToken('admin-demo', ['*']);
-            $pat = PersonalAccessToken::findToken($token->plainTextToken);
-            if ($pat) {
-                $pat->tenant_id = (string)$tenant->id;
-                $pat->save();
-            }
-            $this->command?->info("Admin token: {$token->plainTextToken}");
+            $tokenResult = $admin->createToken('admin-demo', ['*']);
+            $pat = $tokenResult->accessToken;
+            $pat->tenant_id = (string) $tenant->id;
+            $pat->save();
+            $this->command?->info("Admin token: {$tokenResult->plainTextToken}");
         }
 
         // Viewer token
-        $viewer = User::where('email','member@example.test')->first();
+        $viewer = User::on('tenant')->where('email', 'member@example.test')->first();
         if ($viewer) {
-            $token = $viewer->createToken('viewer-demo', ['*']);
-            $pat = PersonalAccessToken::findToken($token->plainTextToken);
-            if ($pat) {
-                $pat->tenant_id = (string)$tenant->id;
-                $pat->save();
-            }
-            $this->command?->info("Viewer token: {$token->plainTextToken}");
+            $tokenResult = $viewer->createToken('viewer-demo', ['*']);
+            $pat = $tokenResult->accessToken;
+            $pat->tenant_id = (string) $tenant->id;
+            $pat->save();
+            $this->command?->info("Viewer token: {$tokenResult->plainTextToken}");
         }
     }
 }
