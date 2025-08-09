@@ -12,7 +12,7 @@ return [
 
     'switch_tenant_tasks' => [
         Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
-        Spatie\Multitenancy\Tasks\SwitchTenantCacheTask::class,
+        Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
     ],
 
     'switch_tenant_tasks_queue' => [
