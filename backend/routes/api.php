@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-Route::prefix('api/v1')->group(function () {
+// API routes are automatically prefixed with `/api` via Laravel's routing
+// configuration in `bootstrap/app.php`. We only need to prefix the version
+// segment here to avoid generating paths like `/api/api/v1`.
+Route::prefix('v1')->group(function () {
 
     // Health
     Route::get('health', fn () => response()->json(['status' => 'ok']))->name('health');
