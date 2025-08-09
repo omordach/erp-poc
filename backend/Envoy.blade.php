@@ -43,12 +43,12 @@ $backend = $release_dir . '/backend';
 
 @task('tenants_migrate', ['on' => 'web'])
     cd {{ $backend }}
-    php artisan tenants:migrate:poc --force
+    php artisan tenants:migrate:poc
 @endtask
 
 @task('tenants_seed', ['on' => 'web'])
     cd {{ $backend }}
-    php artisan tenants:seed:poc --force
+    php artisan tenants:seed:poc
 @endtask
 
 @task('cache_optimize', ['on' => 'web'])
