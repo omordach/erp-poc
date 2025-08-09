@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserRole extends Model
 {
+    /**
+     * Use the tenant database connection.
+     */
+    protected $connection = 'tenant';
+
     protected $guarded = [];
 
     public function user(): BelongsTo

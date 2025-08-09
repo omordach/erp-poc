@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+
+    /**
+     * Use the tenant database connection.
+     */
+    protected $connection = 'tenant';
 
     protected $guarded = [];
 
@@ -32,9 +37,12 @@ class User extends Authenticatable
         foreach ($this->roles as $role) {
             if ($role->module_key === $moduleKey) {
                 $have = $priority[$role->role] ?? 0;
-                if ($have >= $needed) return true;
+                if ($have >= $needed) {
+                    return true;
+                }
             }
         }
+
         return false;
     }
 }
