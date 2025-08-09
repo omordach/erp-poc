@@ -89,8 +89,8 @@ Backend `.env` (auto-copied from `.env.example` by `bootstrap.sh`):
 cd backend
 php artisan migrate --database=landlord --path=database/migrations_landlord --force
 php artisan db:seed --class="Database\Seeders\LandlordDatabaseSeeder" --force
-php artisan tenants:migrate:poc --force
-php artisan tenants:seed:poc --force
+php artisan tenants:migrate:poc
+php artisan tenants:seed:poc
 ```
 
 ---
