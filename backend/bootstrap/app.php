@@ -3,10 +3,10 @@
 use App\Http\Middleware\CheckModulePermission;
 use App\Http\Middleware\TenantFromHeader;
 use App\Http\Middleware\TenantTokenScope;
-use Fruitcake\Cors\HandleCors;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
+use Illuminate\Http\Middleware\HandleCors;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
