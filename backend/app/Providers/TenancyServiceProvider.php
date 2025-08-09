@@ -50,6 +50,7 @@ class TenancyServiceProvider extends ServiceProvider
         // avoids touching the database and fixes bootstrapping.
         Relation::enforceMorphMap([
             'tenant' => \Spatie\Multitenancy\Models\Tenant::class,
+            'user' => \App\Models\User::class,
         ]);
     }
 
