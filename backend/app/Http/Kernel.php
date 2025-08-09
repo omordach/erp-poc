@@ -11,7 +11,7 @@ class Kernel extends HttpKernel
 {
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
-        \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
     ];
 
     protected $middlewareGroups = [
