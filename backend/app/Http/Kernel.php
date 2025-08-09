@@ -2,10 +2,10 @@
 
 namespace App\Http;
 
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\CheckModulePermission;
 use App\Http\Middleware\TenantFromHeader;
 use App\Http\Middleware\TenantTokenScope;
-use App\Http\Middleware\CheckModulePermission;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
         ],
     ];
 
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'module.permission' => CheckModulePermission::class,
     ];
 }
