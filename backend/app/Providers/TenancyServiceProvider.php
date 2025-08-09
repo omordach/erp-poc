@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Spatie\Multitenancy\Models\Tenant;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class TenancyServiceProvider extends ServiceProvider
 {
@@ -42,7 +42,13 @@ class TenancyServiceProvider extends ServiceProvider
             'engine' => null,
         ]);
 
-        Tenant::morphMap([
+        // Register the morph map using the Relation helper instead of
+        // calling the model directly. Calling the model's `morphMap` method
+        // would attempt to resolve a database connection during the service
+        // provider registration phase, which fails because the connection
+        // resolver has not been set up yet. Using `Relation::enforceMorphMap`
+        // avoids touching the database and fixes bootstrapping.
+        Relation::enforceMorphMap([
             'tenant' => \Spatie\Multitenancy\Models\Tenant::class,
         ]);
     }
