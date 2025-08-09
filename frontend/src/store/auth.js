@@ -5,7 +5,10 @@ const DEVICE = 'web-spa'
 export const auth = {
   get token() { return localStorage.getItem(TOKEN_KEY) || '' },
   set token(v) { localStorage.setItem(TOKEN_KEY, v || '') },
-  clear() { localStorage.removeItem(TOKEN_KEY) },
+  clear() {
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(TENANT_KEY)
+  },
   isAuthenticated() { return !!localStorage.getItem(TOKEN_KEY) },
 
   get tenant() { return localStorage.getItem(TENANT_KEY) || '' },
