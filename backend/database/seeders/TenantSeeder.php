@@ -10,6 +10,11 @@ class TenantSeeder extends Seeder
 {
     public function run(): void
     {
+        // Bail out if we've already seeded (admin user exists)
+        if (DB::connection('tenant')->table('users')->where('email', 'admin@example.test')->exists()) {
+            return;
+        }
+
         // USERS
         $adminId = DB::connection('tenant')->table('users')->insertGetId([
             'name' => 'Staff Admin',
